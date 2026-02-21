@@ -14,10 +14,6 @@ body {
     padding: 20px;
 }
 
-h1 {
-    margin-bottom: 5px;
-}
-
 #imageContainer {
     margin: 20px;
 }
@@ -80,7 +76,7 @@ button:hover {
 </head>
 <body>
 
-<h1>Estudio de Fórceps</h1>
+<h1>Entrenamiento de Fórceps</h1>
 
 <div id="progress"></div>
 
@@ -105,7 +101,9 @@ button:hover {
 <script>
 
 let forcepsList = [];
-let currentIndex = 0;
+let currentIndex = -1;
+let lastIndex = -1;
+
 let correct = 0;
 let total = 0;
 
@@ -118,28 +116,11 @@ fetch("forceps.json")
 
     forcepsList = data;
 
-    shuffle(forcepsList);
-
     populateDropdown();
 
-    loadForceps();
+    nextForceps();
 
 });
-
-
-// MEZCLAR ARRAY
-
-function shuffle(array) {
-
-    for (let i = array.length - 1; i > 0; i--) {
-
-        const j = Math.floor(Math.random() * (i + 1));
-
-        [array[i], array[j]] = [array[j], array[i]];
-
-    }
-
-}
 
 
 // LLENAR DROPDOWN
@@ -166,9 +147,34 @@ function populateDropdown() {
 }
 
 
-// CARGAR IMAGE ACTUAL
+// GENERAR ÍNDICE ALEATORIO SIN REPETIR
 
-function loadForceps() {
+function getRandomIndex() {
+
+    if(forcepsList.length <= 1)
+        return 0;
+
+    let newIndex;
+
+    do {
+
+        newIndex =
+            Math.floor(Math.random() * forcepsList.length);
+
+    } while(newIndex === lastIndex);
+
+    return newIndex;
+
+}
+
+
+// CARGAR SIGUIENTE
+
+function nextForceps() {
+
+    lastIndex = currentIndex;
+
+    currentIndex = getRandomIndex();
 
     const item = forcepsList[currentIndex];
 
@@ -180,13 +186,12 @@ function loadForceps() {
     document.getElementById("result").textContent = "";
 
     document.getElementById("progress").textContent =
-        "Imagen " + (currentIndex + 1) +
-        " de " + forcepsList.length;
+        "Pregunta " + (total + 1);
 
 }
 
 
-// COMPROBAR RESPUESTA
+// COMPROBAR
 
 function checkAnswer() {
 
@@ -217,7 +222,7 @@ function checkAnswer() {
 }
 
 
-// MOSTRAR RESULTADO
+// RESULTADO
 
 function showResult(isCorrect, correctName) {
 
@@ -241,26 +246,7 @@ function showResult(isCorrect, correctName) {
 }
 
 
-// SIGUIENTE
-
-function nextForceps() {
-
-    currentIndex++;
-
-    if(currentIndex >= forcepsList.length) {
-
-        shuffle(forcepsList);
-
-        currentIndex = 0;
-
-    }
-
-    loadForceps();
-
-}
-
-
-// ACTUALIZAR SCORE
+// SCORE
 
 function updateScore() {
 
@@ -269,8 +255,10 @@ function updateScore() {
         Math.round(correct/total*100) : 0;
 
     document.getElementById("score").textContent =
-        "Aciertos: " + correct +
-        " / " + total +
+        "Aciertos: " +
+        correct +
+        " / " +
+        total +
         " (" + percent + "%)";
 
 }
