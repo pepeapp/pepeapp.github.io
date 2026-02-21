@@ -1,82 +1,46 @@
 [
   {
-    "image": "F001.png",
-    "name": "Fórceps de incisivos y caninos superiores",
-    "aliases": [
-      "incisivos caninos superiores",
-      "incisivos superiores",
-      "forceps incisivos caninos superiores"
-    ]
+    "image": "FM001.png",
+    "name": "Fórceps de incisivos y caninos superiores"
   },
   {
-    "image": "F002.png",
-    "name": "Fórceps molares superiores",
-    "aliases": [
-      "molares superiores",
-      "forceps molares superiores"
-    ]
+    "image": "FM002.png",
+    "name": "Fórceps de premolares superiores"
   },
   {
-    "image": "F003.png",
-    "name": "Fórceps molares inferiores",
-    "aliases": [
-      "molares inferiores"
-    ]
+    "image": "FM003.png",
+    "name": "Fórceps de molares superiores"
   },
   {
-    "image": "F004.png",
-    "name": "Fórceps universales superiores",
-    "aliases": [
-      "universales superiores"
-    ]
+    "image": "FM004.png",
+    "name": "Fórceps universales superiores"
   },
   {
-    "image": "F003.png",
-    "name": "Fórceps molares inferiores",
-    "aliases": [
-      "molares inferiores"
-    ]
+    "image": "FM005.png",
+    "name": "Fórceps de raíces superiores o de bayoneta"
+},
+  {
+    "image": "FM006.png",
+    "name": "Fórceps de incisivos inferiores"
   },
   {
-    "image": "F003.png",
-    "name": "Fórceps molares inferiores",
-    "aliases": [
-      "molares inferiores"
-    ]
+    "image": "FM007.png",
+    "name": "Fórceps de caninos y premolares inferiores"
   },
   {
-    "image": "F003.png",
-    "name": "Fórceps molares inferiores",
-    "aliases": [
-      "molares inferiores"
-    ]
+    "image": "FM008.png",
+    "name": "Fórceps de molares inferiores"
   },
   {
-    "image": "F003.png",
-    "name": "Fórceps molares inferiores",
-    "aliases": [
-      "molares inferiores"
-    ]
+    "image": "FM009.png",
+    "name": "Fórceps de uso lateral"
   },
   {
-    "image": "F003.png",
-    "name": "Fórceps molares inferiores",
-    "aliases": [
-      "molares inferiores"
-    ]
+    "image": "FM010.png",
+    "name": "Fórceps de terceros molares inferiores o de uso"
   },
   {
-    "image": "F003.png",
-    "name": "Fórceps molares inferiores",
-    "aliases": [
-      "molares inferiores"
-    ]
-  },
-  {
-    "image": "F003.png",
-    "name": "Fórceps molares inferiores",
-    "aliases": [
-      "molares inferiores"
-    ]
+    "image": "FM011.png",
+    "name": "Cucharilla de Legrado"
   }
 ]

@@ -29,13 +29,12 @@ img {
     border: 3px solid white;
 }
 
-input {
+select {
     padding: 12px;
     font-size: 18px;
-    width: 350px;
+    width: 400px;
     margin-top: 15px;
     border-radius: 5px;
-    border: none;
 }
 
 button {
@@ -68,6 +67,14 @@ button:hover {
     color: #aaa;
 }
 
+.correct {
+    color: lightgreen;
+}
+
+.incorrect {
+    color: red;
+}
+
 </style>
 
 </head>
@@ -82,7 +89,9 @@ button:hover {
 </div>
 
 <div>
-    <input id="answerInput" placeholder="Escribe el nombre">
+    <select id="answerSelect">
+        <option value="">-- Selecciona una opción --</option>
+    </select>
 </div>
 
 <div>
@@ -111,12 +120,14 @@ fetch("forceps.json")
 
     shuffle(forcepsList);
 
+    populateDropdown();
+
     loadForceps();
 
 });
 
 
-// MEZCLAR
+// MEZCLAR ARRAY
 
 function shuffle(array) {
 
@@ -131,7 +142,31 @@ function shuffle(array) {
 }
 
 
-// CARGAR FORCEPS
+// LLENAR DROPDOWN
+
+function populateDropdown() {
+
+    const select = document.getElementById("answerSelect");
+
+    select.innerHTML =
+        '<option value="">-- Selecciona una opción --</option>';
+
+    forcepsList.forEach(item => {
+
+        const option = document.createElement("option");
+
+        option.value = item.name;
+
+        option.textContent = item.name;
+
+        select.appendChild(option);
+
+    });
+
+}
+
+
+// CARGAR IMAGE ACTUAL
 
 function loadForceps() {
 
@@ -140,53 +175,40 @@ function loadForceps() {
     document.getElementById("forcepsImage").src =
         "images/" + item.image;
 
-    document.getElementById("answerInput").value = "";
+    document.getElementById("answerSelect").value = "";
 
     document.getElementById("result").textContent = "";
 
     document.getElementById("progress").textContent =
-        "Imagen " + (currentIndex + 1) + " de " + forcepsList.length;
+        "Imagen " + (currentIndex + 1) +
+        " de " + forcepsList.length;
 
 }
 
 
-// NORMALIZAR TEXTO
-
-function normalize(text) {
-
-    return text
-        .toLowerCase()
-        .normalize("NFD")
-        .replace(/[\u0300-\u036f]/g, "")
-        .trim();
-
-}
-
-
-// COMPROBAR
+// COMPROBAR RESPUESTA
 
 function checkAnswer() {
 
-    const userAnswer =
-        normalize(document.getElementById("answerInput").value);
+    const selected =
+        document.getElementById("answerSelect").value;
 
-    const item = forcepsList[currentIndex];
+    if(selected === "") return;
 
-    const correctName = normalize(item.name);
-
-    const aliases = item.aliases.map(a => normalize(a));
+    const correctName =
+        forcepsList[currentIndex].name;
 
     total++;
 
-    if (userAnswer === correctName || aliases.includes(userAnswer)) {
+    if(selected === correctName) {
 
         correct++;
 
-        showResult(true, item.name);
+        showResult(true, correctName);
 
     } else {
 
-        showResult(false, item.name);
+        showResult(false, correctName);
 
     }
 
@@ -195,7 +217,7 @@ function checkAnswer() {
 }
 
 
-// RESULTADO
+// MOSTRAR RESULTADO
 
 function showResult(isCorrect, correctName) {
 
@@ -205,13 +227,14 @@ function showResult(isCorrect, correctName) {
 
         result.textContent = "✅ Correcto";
 
-        result.style.color = "lightgreen";
+        result.className = "correct";
 
     } else {
 
-        result.textContent = "❌ Incorrecto — Era: " + correctName;
+        result.textContent =
+            "❌ Incorrecto — Era: " + correctName;
 
-        result.style.color = "red";
+        result.className = "incorrect";
 
     }
 
@@ -237,27 +260,20 @@ function nextForceps() {
 }
 
 
-// SCORE
+// ACTUALIZAR SCORE
 
 function updateScore() {
 
+    const percent =
+        total > 0 ?
+        Math.round(correct/total*100) : 0;
+
     document.getElementById("score").textContent =
-        "Aciertos: " + correct + " / " + total +
-        " (" + Math.round(correct/total*100) + "%)";
+        "Aciertos: " + correct +
+        " / " + total +
+        " (" + percent + "%)";
 
 }
-
-
-// ENTER
-
-document
-.getElementById("answerInput")
-.addEventListener("keypress", function(e){
-
-    if(e.key === "Enter")
-        checkAnswer();
-
-});
 
 </script>
 
